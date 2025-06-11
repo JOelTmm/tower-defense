@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\TowerDefenseStatePattern.dir\\main.cpp.obj -c C:\\Users\\lrica\\Desktop\\LaPlateforme\\Soutenances\\BA_1\\projet_tower_defense\\main.cpp",
+  "file": "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/main.cpp",
+  "output": "CMakeFiles/TowerDefenseStatePattern.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\TowerDefenseStatePattern.dir\\MainMenuState.cpp.obj -c C:\\Users\\lrica\\Desktop\\LaPlateforme\\Soutenances\\BA_1\\projet_tower_defense\\MainMenuState.cpp",
+  "file": "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/MainMenuState.cpp",
+  "output": "CMakeFiles/TowerDefenseStatePattern.dir/MainMenuState.cpp.obj"
+},
+{
+  "directory": "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe   -g -std=gnu++17 -o CMakeFiles\\TowerDefenseStatePattern.dir\\SettingsState.cpp.obj -c C:\\Users\\lrica\\Desktop\\LaPlateforme\\Soutenances\\BA_1\\projet_tower_defense\\SettingsState.cpp",
+  "file": "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/SettingsState.cpp",
+  "output": "CMakeFiles/TowerDefenseStatePattern.dir/SettingsState.cpp.obj"
+}
+]

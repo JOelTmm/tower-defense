@@ -1,35 +1,32 @@
-cmake_minimum_required(VERSION 3.10)
-project(TowerDefense LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.16)
+project(TowerDefenseStatePattern)
 
-# Configuration du standard C++
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Recherche de SFML
-find_package(SFML 2.6.1 COMPONENTS graphics window system audio REQUIRED)
+# SFML: cherchez le package installé
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
-# Fichiers sources du projet
-set(SOURCE_FILES
-    src/main.cpp
-    src/GameManager.cpp
-    src/GameView.cpp
-    src/Tower.cpp
-    src/Enemy.cpp
+# Ajouter les fichiers du projet
+add_executable(${PROJECT_NAME}
+    main.cpp
+    Button.hpp
+    Game.hpp
+    GameState.hpp
+    MainMenuState.hpp
+    SettingsState.hpp
+    MainMenuState.cpp
+    SettingsState.cpp
 )
 
-# Création de l'exécutable
-add_executable(tower-defense ${SOURCE_FILES})
-
-# Lien avec les bibliothèques SFML
-target_link_libraries(tower-defense
+# Lier SFML
+target_link_libraries(${PROJECT_NAME}
     sfml-graphics
     sfml-window
     sfml-system
-    sfml-audio
 )
 
-# Inclusion des headers
-target_include_directories(tower-defense PRIVATE ${CMAKE_SOURCE_DIR}/src)
-
-# Copie automatique du dossier assets dans le dossier de build
-file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+# Pour l'exécution depuis l'IDE (copie des ressources)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_SOURCE_DIR}/assets $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+)
