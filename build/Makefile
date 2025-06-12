@@ -56,10 +56,10 @@ RM = C:\msys64\mingw64\bin\cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense
+CMAKE_SOURCE_DIR = C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\tower-defense
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\build
+CMAKE_BINARY_DIR = C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\tower-defense\build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\build\CMakeFiles C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\build\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\tower-defense\build\CMakeFiles C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\tower-defense\build\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\build\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\lrica\Desktop\LaPlateforme\Soutenances\BA_1\projet_tower_defense\tower-defense\build\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -116,89 +116,161 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named TowerDefenseStatePattern
+# Target rules for targets named tower-defense
 
 # Build rule for target.
-TowerDefenseStatePattern: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 TowerDefenseStatePattern
-.PHONY : TowerDefenseStatePattern
+tower-defense: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 tower-defense
+.PHONY : tower-defense
 
 # fast build rule for target.
-TowerDefenseStatePattern/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/build
-.PHONY : TowerDefenseStatePattern/fast
+tower-defense/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/build
+.PHONY : tower-defense/fast
 
-MainMenuState.obj: MainMenuState.cpp.obj
-.PHONY : MainMenuState.obj
-
-# target to build an object file
-MainMenuState.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/MainMenuState.cpp.obj
-.PHONY : MainMenuState.cpp.obj
-
-MainMenuState.i: MainMenuState.cpp.i
-.PHONY : MainMenuState.i
-
-# target to preprocess a source file
-MainMenuState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/MainMenuState.cpp.i
-.PHONY : MainMenuState.cpp.i
-
-MainMenuState.s: MainMenuState.cpp.s
-.PHONY : MainMenuState.s
-
-# target to generate assembly for a file
-MainMenuState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/MainMenuState.cpp.s
-.PHONY : MainMenuState.cpp.s
-
-SettingsState.obj: SettingsState.cpp.obj
-.PHONY : SettingsState.obj
+src/ButtonImage.obj: src/ButtonImage.cpp.obj
+.PHONY : src/ButtonImage.obj
 
 # target to build an object file
-SettingsState.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/SettingsState.cpp.obj
-.PHONY : SettingsState.cpp.obj
+src/ButtonImage.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/ButtonImage.cpp.obj
+.PHONY : src/ButtonImage.cpp.obj
 
-SettingsState.i: SettingsState.cpp.i
-.PHONY : SettingsState.i
+src/ButtonImage.i: src/ButtonImage.cpp.i
+.PHONY : src/ButtonImage.i
 
 # target to preprocess a source file
-SettingsState.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/SettingsState.cpp.i
-.PHONY : SettingsState.cpp.i
+src/ButtonImage.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/ButtonImage.cpp.i
+.PHONY : src/ButtonImage.cpp.i
 
-SettingsState.s: SettingsState.cpp.s
-.PHONY : SettingsState.s
+src/ButtonImage.s: src/ButtonImage.cpp.s
+.PHONY : src/ButtonImage.s
 
 # target to generate assembly for a file
-SettingsState.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/SettingsState.cpp.s
-.PHONY : SettingsState.cpp.s
+src/ButtonImage.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/ButtonImage.cpp.s
+.PHONY : src/ButtonImage.cpp.s
 
-main.obj: main.cpp.obj
-.PHONY : main.obj
+src/ButtonText.obj: src/ButtonText.cpp.obj
+.PHONY : src/ButtonText.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+src/ButtonText.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/ButtonText.cpp.obj
+.PHONY : src/ButtonText.cpp.obj
 
-main.i: main.cpp.i
-.PHONY : main.i
+src/ButtonText.i: src/ButtonText.cpp.i
+.PHONY : src/ButtonText.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/main.cpp.i
-.PHONY : main.cpp.i
+src/ButtonText.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/ButtonText.cpp.i
+.PHONY : src/ButtonText.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+src/ButtonText.s: src/ButtonText.cpp.s
+.PHONY : src/ButtonText.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\TowerDefenseStatePattern.dir\build.make CMakeFiles/TowerDefenseStatePattern.dir/main.cpp.s
-.PHONY : main.cpp.s
+src/ButtonText.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/ButtonText.cpp.s
+.PHONY : src/ButtonText.cpp.s
+
+src/Game.obj: src/Game.cpp.obj
+.PHONY : src/Game.obj
+
+# target to build an object file
+src/Game.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/Game.cpp.obj
+.PHONY : src/Game.cpp.obj
+
+src/Game.i: src/Game.cpp.i
+.PHONY : src/Game.i
+
+# target to preprocess a source file
+src/Game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/Game.cpp.i
+.PHONY : src/Game.cpp.i
+
+src/Game.s: src/Game.cpp.s
+.PHONY : src/Game.s
+
+# target to generate assembly for a file
+src/Game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/Game.cpp.s
+.PHONY : src/Game.cpp.s
+
+src/MainMenuState.obj: src/MainMenuState.cpp.obj
+.PHONY : src/MainMenuState.obj
+
+# target to build an object file
+src/MainMenuState.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/MainMenuState.cpp.obj
+.PHONY : src/MainMenuState.cpp.obj
+
+src/MainMenuState.i: src/MainMenuState.cpp.i
+.PHONY : src/MainMenuState.i
+
+# target to preprocess a source file
+src/MainMenuState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/MainMenuState.cpp.i
+.PHONY : src/MainMenuState.cpp.i
+
+src/MainMenuState.s: src/MainMenuState.cpp.s
+.PHONY : src/MainMenuState.s
+
+# target to generate assembly for a file
+src/MainMenuState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/MainMenuState.cpp.s
+.PHONY : src/MainMenuState.cpp.s
+
+src/SettingsState.obj: src/SettingsState.cpp.obj
+.PHONY : src/SettingsState.obj
+
+# target to build an object file
+src/SettingsState.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/SettingsState.cpp.obj
+.PHONY : src/SettingsState.cpp.obj
+
+src/SettingsState.i: src/SettingsState.cpp.i
+.PHONY : src/SettingsState.i
+
+# target to preprocess a source file
+src/SettingsState.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/SettingsState.cpp.i
+.PHONY : src/SettingsState.cpp.i
+
+src/SettingsState.s: src/SettingsState.cpp.s
+.PHONY : src/SettingsState.s
+
+# target to generate assembly for a file
+src/SettingsState.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/SettingsState.cpp.s
+.PHONY : src/SettingsState.cpp.s
+
+src/main.obj: src/main.cpp.obj
+.PHONY : src/main.obj
+
+# target to build an object file
+src/main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/main.cpp.obj
+.PHONY : src/main.cpp.obj
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\tower-defense.dir\build.make CMakeFiles/tower-defense.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -208,16 +280,25 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... TowerDefenseStatePattern
-	@echo ... MainMenuState.obj
-	@echo ... MainMenuState.i
-	@echo ... MainMenuState.s
-	@echo ... SettingsState.obj
-	@echo ... SettingsState.i
-	@echo ... SettingsState.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... tower-defense
+	@echo ... src/ButtonImage.obj
+	@echo ... src/ButtonImage.i
+	@echo ... src/ButtonImage.s
+	@echo ... src/ButtonText.obj
+	@echo ... src/ButtonText.i
+	@echo ... src/ButtonText.s
+	@echo ... src/Game.obj
+	@echo ... src/Game.i
+	@echo ... src/Game.s
+	@echo ... src/MainMenuState.obj
+	@echo ... src/MainMenuState.i
+	@echo ... src/MainMenuState.s
+	@echo ... src/SettingsState.obj
+	@echo ... src/SettingsState.i
+	@echo ... src/SettingsState.s
+	@echo ... src/main.obj
+	@echo ... src/main.i
+	@echo ... src/main.s
 .PHONY : help
 
 

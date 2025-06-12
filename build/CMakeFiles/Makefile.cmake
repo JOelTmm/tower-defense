@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "MinGW Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/CMakeLists.txt"
+  "C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/tower-defense/CMakeLists.txt"
   "CMakeFiles/4.0.2/CMakeCCompiler.cmake"
   "CMakeFiles/4.0.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.0.2/CMakeRCCompiler.cmake"
@@ -64,5 +64,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/TowerDefenseStatePattern.dir/DependInfo.cmake"
+  "CMakeFiles/tower-defense.dir/DependInfo.cmake"
   )
