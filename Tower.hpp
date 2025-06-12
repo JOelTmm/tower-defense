@@ -3,6 +3,8 @@
 
 #include <string>
 #include <memory>
+#include <vector>
+#include "Enemy.hpp"
 
 enum class TowerType { BASIC, SNIPER };
 
@@ -10,32 +12,37 @@ class Tower {
 protected:
     int level;
     int price;
-    float attackSpeed; // attaques par seconde
+    float attackSpeed;
     float range;
     std::string name;
+    int x, y; // Position sur la carte
 
 public:
     Tower(int price, float speed, float range, std::string name);
     virtual ~Tower() = default;
 
-    virtual void attack() = 0;
+    void setPosition(int x, int y);
+    std::pair<int, int> getPosition() const;
+
+    virtual void attack(std::vector<std::shared_ptr<Enemy>>& enemies);
     virtual int getPrice() const;
     virtual std::string getName() const;
-    virtual void upgrade(); // +2 prix
-    virtual void sell();    // Affiche prix/2
-    virtual void accelerate(); // Vitesse * 2 jusqu’à max 3
+    virtual void upgrade();
+    virtual void sell();
+    virtual void accelerate();
+    float getRange() const;
 };
 
 class BasicTower : public Tower {
 public:
     BasicTower();
-    void attack() override;
+    void attack(std::vector<std::shared_ptr<Enemy>>& enemies) override;
 };
 
 class SniperTower : public Tower {
 public:
     SniperTower();
-    void attack() override;
+    void attack(std::vector<std::shared_ptr<Enemy>>& enemies) override;
 };
 
 class TowerFactory {
@@ -43,4 +50,4 @@ public:
     static std::shared_ptr<Tower> createTower(TowerType type);
 };
 
-#endif // TOWER_HPP
+#endif
