@@ -4,8 +4,10 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\msys64\\ucrt64\\include",
-                "C:\\msys64\\ucrt64\\include\\postgresql"
+                "${workspaceFolder}/include/**", // Ajout du dossier include du projet
+                "C:\\msys64\\ucrt64\\include", // Garder pour MSYS2
+                "C:\\msys64\\ucrt64\\include\\postgresql", // Garder pour PostgreSQL si nécessaire
+                "C:\\SFML-2.x\\include" // Ajout du chemin des en-têtes SFML (ajustez selon votre installation)
             ],
             "defines": [],
             "compilerPath": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
