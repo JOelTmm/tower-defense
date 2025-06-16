@@ -1,0 +1,53 @@
+# Build directories
+build/
+build/*
+!build/assets/
+
+# Compiled binaries
+*.exe
+*.out
+*.app
+tower-defense
+test_sfml
+
+# Object files
+*.o
+*.obj
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+*.cmake
+!CMakeLists.txt
+
+# IDE files
+.vscode/
+.vs/
+*.vcxproj*
+*.sln
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Dependencies (if using vcpkg or similar)
+vcpkg_installed/
+
+# Font files (if they are copyrighted, otherwise remove this line)
+# *.ttf
+# *.TTF
+
+# Large asset files (uncomment if you have large assets)
+# *.wav
+# *.mp3
+# *.ogg

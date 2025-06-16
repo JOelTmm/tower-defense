@@ -1,21 +1,32 @@
 #include "GameManager.hpp"
 #include "StartState.hpp"
-#include <iostream> // Ajout de l'en-tête manquant
+#include "ResourceManager.hpp"
+#include <iostream>
 
 GameManager* GameManager::instance = nullptr;
 
 GameManager::GameManager() : window(sf::VideoMode(800, 600), "Tower Defense") {
-    if (!ambianceBuffer.loadFromFile("assets/ambiance.wav") ||
-        !clickBuffer.loadFromFile("assets/click.wav") ||
-        !victoryBuffer.loadFromFile("assets/victory.wav") ||
-        !defeatBuffer.loadFromFile("assets/defeat.wav")) {
+    // Chargement des sons via ResourceManager
+    ResourceManager& resources = ResourceManager::getInstance();
+    
+    if (!resources.loadSoundBuffer("assets/ambiance.wav", "ambiance") ||
+        !resources.loadSoundBuffer("assets/click.wav", "click") ||
+        !resources.loadSoundBuffer("assets/victory.wav", "victory") ||
+        !resources.loadSoundBuffer("assets/defeat.wav", "defeat")) {
         std::cerr << "Erreur chargement des sons.\n";
     }
-    ambianceSound.setBuffer(ambianceBuffer);
-    clickSound.setBuffer(clickBuffer);
-    victorySound.setBuffer(victoryBuffer);
-    defeatSound.setBuffer(defeatBuffer);
+    
+    // Configuration des sons
+    ambianceSound.setBuffer(resources.getSoundBuffer("assets/ambiance.wav"));
+    clickSound.setBuffer(resources.getSoundBuffer("assets/click.wav"));
+    victorySound.setBuffer(resources.getSoundBuffer("assets/victory.wav"));
+    defeatSound.setBuffer(resources.getSoundBuffer("assets/defeat.wav"));
+    
     ambianceSound.setVolume(volume);
+    clickSound.setVolume(volume);
+    victorySound.setVolume(volume);
+    defeatSound.setVolume(volume);
+    
     playAmbiance();
     changeState(std::make_unique<StartState>());
 }
@@ -33,7 +44,7 @@ void GameManager::run() {
             if (currentState) currentState->handleEvent(event, *this);
         }
         if (currentState) currentState->update(*this);
-        window.clear();
+        window.clear(sf::Color::Black);
         if (currentState) currentState->draw(window);
         window.display();
     }

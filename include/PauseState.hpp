@@ -1,20 +1,30 @@
 #ifndef PAUSESTATE_H
-  #define PAUSESTATE_H
+#define PAUSESTATE_H
 
-  #include "GameState.hpp"
-  #include "ButtonFactory.hpp" // Assure-toi que ce fichier est dans include/
-  #include <memory>
+#include "GameState.hpp"
+#include "ResourceManager.hpp"
+#include "Button.hpp"
+#include <SFML/Graphics.hpp>
+#include <vector>
+#include <memory>
 
-  class PauseState : public GameState {
-  private:
-      ButtonFactory& buttonFactory;
-      std::unique_ptr<Button> volumeUpButton, volumeDownButton, quitButton, resumeButton;
+class PauseState : public GameState {
+private:
+    sf::Text titleText;
+    sf::Text instructionText;
+    sf::Font* font;
+    std::vector<std::unique_ptr<Button>> buttons;
+    sf::RectangleShape overlay;
 
-  public:
-      PauseState(ButtonFactory& factory);
-      void handleEvent(sf::Event& event, GameManager& game) override;
-      void update(GameManager& game) override;
-      void draw(sf::RenderWindow& window) override;
-  };
+public:
+    PauseState();
+    void handleEvent(sf::Event& event, GameManager& game) override;
+    void update(GameManager& game) override;
+    void draw(sf::RenderWindow& window) override;
+    
+private:
+    void setupButtons();
+    void handleButtonClick(int buttonIndex, GameManager& game);
+};
 
-  #endif
+#endif

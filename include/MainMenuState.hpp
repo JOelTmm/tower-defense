@@ -1,5 +1,5 @@
-#ifndef TOWERMENUSTATE_H
-#define TOWERMENUSTATE_H
+#ifndef MAINMENUSTATE_H
+#define MAINMENUSTATE_H
 
 #include "GameState.hpp"
 #include "ResourceManager.hpp"
@@ -8,16 +8,15 @@
 #include <vector>
 #include <memory>
 
-class TowerMenuState : public GameState {
+class MainMenuState : public GameState {
 private:
     sf::Text titleText;
-    sf::Text instructionText;
     sf::Font* font;
     std::vector<std::unique_ptr<Button>> buttons;
-    sf::RectangleShape overlay;
+    sf::Sprite backgroundSprite;
 
 public:
-    TowerMenuState();
+    MainMenuState();
     void handleEvent(sf::Event& event, GameManager& game) override;
     void update(GameManager& game) override;
     void draw(sf::RenderWindow& window) override;

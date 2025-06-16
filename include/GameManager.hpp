@@ -19,7 +19,6 @@ private:
     int lives = 10;
     int score = 0;
     int wave = 1;
-    sf::SoundBuffer ambianceBuffer, clickBuffer, victoryBuffer, defeatBuffer;
     sf::Sound ambianceSound, clickSound, victorySound, defeatSound;
     float volume = 50.0f;
 

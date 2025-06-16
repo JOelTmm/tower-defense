@@ -34,6 +34,7 @@ public:
     }
     int getX() const { return x; }
     int getY() const { return y; }
+    int getHP() const { return health; }
     bool hasReachedEnd() const { return currentWaypoint >= path.size() - 1; }
     void takeDamage(int damage) { health -= damage; }
     void render(sf::RenderWindow& window) {

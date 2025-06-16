@@ -51,7 +51,22 @@ void Tower::attack(std::vector<std::shared_ptr<Enemy>>& enemies) {
 }
 
 void Tower::render(sf::RenderWindow& window) {
-    // Implémentation par défaut vide
+    if (x >= 0 && y >= 0) {
+        sf::RectangleShape towerShape(sf::Vector2f(40, 40));
+        towerShape.setPosition(x - 20, y - 20); // Centrer la tour
+        towerShape.setFillColor(sf::Color(128, 128, 128)); // Gris
+        window.draw(towerShape);
+        
+        // Dessiner la portée si nécessaire (optionnel)
+        /*
+        sf::CircleShape rangeCircle(range);
+        rangeCircle.setPosition(x - range, y - range);
+        rangeCircle.setFillColor(sf::Color::Transparent);
+        rangeCircle.setOutlineColor(sf::Color(255, 255, 255, 50));
+        rangeCircle.setOutlineThickness(1);
+        window.draw(rangeCircle);
+        */
+    }
 }
 
 // BasicTower
@@ -72,10 +87,12 @@ void BasicTower::attack(std::vector<std::shared_ptr<Enemy>>& enemies) {
 }
 
 void BasicTower::render(sf::RenderWindow& window) {
-    sf::RectangleShape towerShape(sf::Vector2f(40, 40));
-    towerShape.setPosition(x * 50 + 5, y * 50 + 5);
-    towerShape.setFillColor(sf::Color::Green);
-    window.draw(towerShape);
+    if (x >= 0 && y >= 0) {
+        sf::RectangleShape towerShape(sf::Vector2f(40, 40));
+        towerShape.setPosition(x - 20, y - 20);
+        towerShape.setFillColor(sf::Color::Green);
+        window.draw(towerShape);
+    }
 }
 
 // SniperTower
@@ -96,10 +113,12 @@ void SniperTower::attack(std::vector<std::shared_ptr<Enemy>>& enemies) {
 }
 
 void SniperTower::render(sf::RenderWindow& window) {
-    sf::RectangleShape towerShape(sf::Vector2f(40, 40));
-    towerShape.setPosition(x * 50 + 5, y * 50 + 5);
-    towerShape.setFillColor(sf::Color::Blue);
-    window.draw(towerShape);
+    if (x >= 0 && y >= 0) {
+        sf::RectangleShape towerShape(sf::Vector2f(40, 40));
+        towerShape.setPosition(x - 20, y - 20);
+        towerShape.setFillColor(sf::Color::Blue);
+        window.draw(towerShape);
+    }
 }
 
 // Factory

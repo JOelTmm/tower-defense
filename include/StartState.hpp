@@ -2,11 +2,13 @@
 #define STARTSTATE_H
 
 #include "GameState.hpp"
+#include "ResourceManager.hpp"
 #include <SFML/Graphics.hpp>
 
 class StartState : public GameState {
 private:
     sf::Text text;
+    sf::Font* font;
 
 public:
     StartState();

@@ -1,29 +1,55 @@
 #ifndef GAME_VIEW_HPP
 #define GAME_VIEW_HPP
+
+#include "GameState.hpp"
+#include "ResourceManager.hpp"
+#include "Map.hpp"
+#include "Tower.hpp"
+#include "Enemy.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "GameManager.hpp"
+#include <vector>
+#include <memory>
 
-class GameView {
+class GameView : public GameState {
+private:
+    sf::Font* font;
+    sf::Text hudText;
+    sf::Text goldText;
+    sf::Text livesText;
+    sf::Text waveText;
+    sf::Text scoreText;
+    
+    std::unique_ptr<Map> gameMap;
+    std::vector<std::unique_ptr<Tower>> towers;
+    std::vector<std::unique_ptr<Enemy>> enemies;
+    
+    sf::Clock enemySpawnClock;
+    sf::Clock gameUpdateClock;
+    
+    int enemiesSpawned;
+    int enemiesPerWave;
+    bool waveActive;
+    
+    // UI Elements
+    sf::RectangleShape hudBackground;
+    sf::RectangleShape pauseButton;
+    sf::RectangleShape towerMenuButton;
+    
 public:
     GameView();
-    void render(sf::RenderWindow& window, GameManager& gameManager);
-    void setSoundVolume(float volume);
-    void toggleSound();
-
+    void handleEvent(sf::Event& event, GameManager& game) override;
+    void update(GameManager& game) override;
+    void draw(sf::RenderWindow& window) override;
+    
 private:
-    sf::Font font;
-    sf::RectangleShape menuRect[5];
-    sf::RectangleShape settingsRect[3];
-    sf::RectangleShape hudRect;
-    sf::RectangleShape backgroundRect;
-    sf::RectangleShape towerRect, enemyRect;
-    sf::RectangleShape healthBar;
-    sf::Text menuText[5], settingsText[3], hudText;
-    sf::SoundBuffer shotBuffer;
-    sf::Sound shotSound;
-    float volume;
-    bool soundEnabled;
+    void setupUI();
+    void spawnEnemy();
+    void updateTowers();
+    void updateEnemies();
+    void checkCollisions();
+    void updateHUD(GameManager& game);
+    void handleTowerPlacement(sf::Vector2f mousePos, GameManager& game);
 };
 
 #endif

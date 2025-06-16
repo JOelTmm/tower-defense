@@ -1,0 +1,252 @@
+# =============================================================================
+# Makefile pour Tower Defense - Compatible Linux/Windows
+# =============================================================================
+
+# Configuration du projet
+PROJECT_NAME = tower-defense
+BUILD_DIR = build
+SRC_DIR = src
+INCLUDE_DIR = include
+ASSETS_DIR = src/assets
+
+# Détection automatique de l'OS
+ifeq ($(OS),Windows_NT)
+    # Configuration Windows
+    DETECTED_OS := Windows
+    EXE_EXT := .exe
+    RM := del /Q
+    MKDIR := mkdir
+    PATH_SEP := \\
+    
+    # Compilateur et flags Windows (MinGW)
+    CXX := g++
+    CXXFLAGS := -std=c++17 -Wall -Wextra -O2
+    INCLUDES := -I$(INCLUDE_DIR) -ISFML/include
+    
+    # Bibliothèques SFML Windows (statiques)
+    LIBS_STATIC := -LSFML/lib -lsfml-graphics-s -lsfml-window-s -lsfml-audio-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg
+    LIBS_SHARED := -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
+    
+    # Configuration par défaut Windows (statique pour portabilité)
+    LIBS := $(LIBS_STATIC)
+    LDFLAGS := -static
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        # Configuration Linux
+        DETECTED_OS := Linux
+        EXE_EXT :=
+        RM := rm -f
+        MKDIR := mkdir -p
+        PATH_SEP := /
+        
+        # Compilateur et flags Linux
+        CXX := g++
+        CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -fPIC
+        INCLUDES := -I$(INCLUDE_DIR) $(shell pkg-config --cflags sfml-all)
+        
+        # Bibliothèques SFML Linux
+        LIBS := $(shell pkg-config --libs sfml-all)
+        LDFLAGS :=
+    else
+        # Configuration macOS (si nécessaire)
+        DETECTED_OS := macOS
+        EXE_EXT :=
+        RM := rm -f
+        MKDIR := mkdir -p
+        PATH_SEP := /
+        
+        CXX := clang++
+        CXXFLAGS := -std=c++17 -Wall -Wextra -O2
+        INCLUDES := -I$(INCLUDE_DIR) -I/usr/local/include
+        LIBS := -L/usr/local/lib -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
+        LDFLAGS :=
+    endif
+endif
+
+# Fichiers sources (tous les .cpp dans src/)
+SOURCES := $(wildcard $(SRC_DIR)/*.cpp)
+OBJECTS := $(SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+TARGET := $(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
+
+# Couleurs pour l'affichage (Linux/macOS uniquement)
+ifneq ($(DETECTED_OS),Windows)
+    COLOR_GREEN := \033[32m
+    COLOR_BLUE := \033[34m
+    COLOR_YELLOW := \033[33m
+    COLOR_RED := \033[31m
+    COLOR_RESET := \033[0m
+else
+    COLOR_GREEN :=
+    COLOR_BLUE :=
+    COLOR_YELLOW :=
+    COLOR_RED :=
+    COLOR_RESET :=
+endif
+
+# =============================================================================
+# Règles principales
+# =============================================================================
+
+.PHONY: all debug release clean install run help windows-static windows-shared linux
+
+# Règle par défaut
+all: info $(TARGET) assets
+	@echo "$(COLOR_GREEN)✓ Compilation terminée avec succès !$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)Exécutable: $(TARGET)$(COLOR_RESET)"
+
+# Affichage des informations système
+info:
+	@echo "$(COLOR_BLUE)================================$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)  Tower Defense - Compilation$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)================================$(COLOR_RESET)"
+	@echo "OS détecté: $(COLOR_YELLOW)$(DETECTED_OS)$(COLOR_RESET)"
+	@echo "Compilateur: $(COLOR_YELLOW)$(CXX)$(COLOR_RESET)"
+	@echo "Flags: $(COLOR_YELLOW)$(CXXFLAGS)$(COLOR_RESET)"
+	@echo ""
+
+# Création du répertoire de build
+$(BUILD_DIR):
+	$(MKDIR) $(BUILD_DIR)
+
+# Compilation des objets
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+	@echo "$(COLOR_GREEN)Compilation: $<$(COLOR_RESET)"
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+
+# Linkage de l'exécutable
+$(TARGET): $(OBJECTS)
+	@echo "$(COLOR_BLUE)Linkage: $(TARGET)$(COLOR_RESET)"
+	$(CXX) $(OBJECTS) -o $@ $(LIBS) $(LDFLAGS)
+
+# Copie des assets
+assets: $(TARGET)
+	@echo "$(COLOR_YELLOW)Copie des assets...$(COLOR_RESET)"
+ifeq ($(DETECTED_OS),Windows)
+	if not exist "$(BUILD_DIR)$(PATH_SEP)assets" $(MKDIR) "$(BUILD_DIR)$(PATH_SEP)assets"
+	copy "$(ASSETS_DIR)$(PATH_SEP)*" "$(BUILD_DIR)$(PATH_SEP)assets$(PATH_SEP)"
+else
+	$(MKDIR) $(BUILD_DIR)/assets
+	cp -r $(ASSETS_DIR)/* $(BUILD_DIR)/assets/
+endif
+
+# =============================================================================
+# Configurations spécifiques
+# =============================================================================
+
+# Version debug
+debug: CXXFLAGS += -g -DDEBUG -O0
+debug: all
+	@echo "$(COLOR_YELLOW)Version debug compilée$(COLOR_RESET)"
+
+# Version release
+release: CXXFLAGS += -DNDEBUG -O3
+release: all
+	@echo "$(COLOR_YELLOW)Version release compilée$(COLOR_RESET)"
+
+# Compilation Windows avec bibliothèques statiques
+windows-static: LIBS = $(LIBS_STATIC)
+windows-static: LDFLAGS = -static
+windows-static: all
+	@echo "$(COLOR_GREEN)Version Windows statique compilée$(COLOR_RESET)"
+
+# Compilation Windows avec bibliothèques partagées
+windows-shared: LIBS = $(LIBS_SHARED)
+windows-shared: LDFLAGS =
+windows-shared: all
+	@echo "$(COLOR_GREEN)Version Windows partagée compilée$(COLOR_RESET)"
+	@echo "$(COLOR_YELLOW)N'oubliez pas de copier les DLL SFML !$(COLOR_RESET)"
+
+# Compilation Linux optimisée
+linux: CXXFLAGS += -march=native -flto
+linux: LDFLAGS += -flto
+linux: all
+	@echo "$(COLOR_GREEN)Version Linux optimisée compilée$(COLOR_RESET)"
+
+# =============================================================================
+# Utilitaires
+# =============================================================================
+
+# Exécution du jeu
+run: $(TARGET)
+	@echo "$(COLOR_BLUE)Lancement de $(PROJECT_NAME)...$(COLOR_RESET)"
+ifeq ($(DETECTED_OS),Windows)
+	cd $(BUILD_DIR) && $(PROJECT_NAME)$(EXE_EXT)
+else
+	cd $(BUILD_DIR) && ./$(PROJECT_NAME)$(EXE_EXT)
+endif
+
+# Installation (Linux seulement)
+install: $(TARGET)
+ifeq ($(DETECTED_OS),Linux)
+	@echo "$(COLOR_BLUE)Installation de $(PROJECT_NAME)...$(COLOR_RESET)"
+	sudo cp $(TARGET) /usr/local/bin/
+	sudo mkdir -p /usr/local/share/$(PROJECT_NAME)
+	sudo cp -r $(BUILD_DIR)/assets /usr/local/share/$(PROJECT_NAME)/
+	@echo "$(COLOR_GREEN)Installation terminée !$(COLOR_RESET)"
+	@echo "Vous pouvez maintenant lancer: $(PROJECT_NAME)"
+else
+	@echo "$(COLOR_RED)Installation disponible uniquement sur Linux$(COLOR_RESET)"
+endif
+
+# Nettoyage
+clean:
+	@echo "$(COLOR_YELLOW)Nettoyage...$(COLOR_RESET)"
+ifeq ($(DETECTED_OS),Windows)
+	if exist "$(BUILD_DIR)" rmdir /S /Q "$(BUILD_DIR)"
+else
+	$(RM) -r $(BUILD_DIR)
+endif
+	@echo "$(COLOR_GREEN)Nettoyage terminé$(COLOR_RESET)"
+
+# Vérification des dépendances
+check-deps:
+	@echo "$(COLOR_BLUE)Vérification des dépendances...$(COLOR_RESET)"
+ifeq ($(DETECTED_OS),Linux)
+	@which $(CXX) > /dev/null || (echo "$(COLOR_RED)Erreur: $(CXX) non trouvé$(COLOR_RESET)" && exit 1)
+	@pkg-config --exists sfml-all || (echo "$(COLOR_RED)Erreur: SFML non trouvé$(COLOR_RESET)" && exit 1)
+	@echo "$(COLOR_GREEN)✓ Toutes les dépendances sont présentes$(COLOR_RESET)"
+else ifeq ($(DETECTED_OS),Windows)
+	@where $(CXX) > nul 2>&1 || (echo "$(COLOR_RED)Erreur: $(CXX) non trouvé$(COLOR_RESET)" && exit 1)
+	@echo "$(COLOR_YELLOW)Vérifiez manuellement la présence de SFML dans SFML/$(COLOR_RESET)"
+endif
+
+# Aide
+help:
+	@echo "$(COLOR_BLUE)================================$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)  Tower Defense - Aide$(COLOR_RESET)"
+	@echo "$(COLOR_BLUE)================================$(COLOR_RESET)"
+	@echo ""
+	@echo "$(COLOR_YELLOW)Commandes principales:$(COLOR_RESET)"
+	@echo "  make              - Compilation standard"
+	@echo "  make debug        - Compilation debug"
+	@echo "  make release      - Compilation optimisée"
+	@echo "  make run          - Compiler et exécuter"
+	@echo "  make clean        - Nettoyer les fichiers"
+	@echo ""
+	@echo "$(COLOR_YELLOW)Configurations spéciales:$(COLOR_RESET)"
+	@echo "  make windows-static  - Windows avec libs statiques"
+	@echo "  make windows-shared  - Windows avec DLL"
+	@echo "  make linux          - Linux optimisé"
+	@echo ""
+	@echo "$(COLOR_YELLOW)Utilitaires:$(COLOR_RESET)"
+	@echo "  make install      - Installer (Linux seulement)"
+	@echo "  make check-deps   - Vérifier les dépendances"
+	@echo "  make help         - Afficher cette aide"
+	@echo ""
+	@echo "$(COLOR_YELLOW)Variables d'environnement:$(COLOR_RESET)"
+	@echo "  CXX=g++ make      - Changer le compilateur"
+	@echo "  DEBUG=1 make      - Forcer le mode debug"
+
+# =============================================================================
+# Règles de dépendances
+# =============================================================================
+
+# Dépendances automatiques
+-include $(OBJECTS:.o=.d)
+
+$(BUILD_DIR)/%.d: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+	@$(CXX) $(CXXFLAGS) $(INCLUDES) -MM -MT $(@:.d=.o) $< > $@
+
+# Marquer les fichiers .d comme secondaires pour éviter leur suppression
+.SECONDARY: $(OBJECTS:.o=.d)

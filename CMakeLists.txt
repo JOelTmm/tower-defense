@@ -15,6 +15,16 @@ set(SOURCE_FILES
     src/GameView.cpp
     src/Tower.cpp
     src/Enemy.cpp
+    src/Map.cpp
+    src/StartState.cpp
+    src/MainMenuState.cpp
+    src/PauseState.cpp
+    src/SettingsState.cpp
+    src/TowerMenuState.cpp
+    src/ButtonFactory.cpp
+    src/ButtonText.cpp
+    src/ButtonImage.cpp
+    src/ResourceManager.cpp
 )
 
 # Création de l'exécutable
@@ -29,7 +39,7 @@ target_link_libraries(tower-defense
 )
 
 # Inclusion des headers
-target_include_directories(tower-defense PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(tower-defense PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 # Copie automatique du dossier assets dans le dossier de build
-file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+file(COPY src/assets DESTINATION ${CMAKE_BINARY_DIR})

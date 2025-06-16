@@ -49,6 +49,7 @@ public:
     void render(sf::RenderWindow& window) override;
 };
 
+// Factory Pattern pour créer les tours
 class TowerFactory {
 public:
     static std::shared_ptr<Tower> createTower(TowerType type);
