@@ -1,0 +1,193 @@
+# =============================================================================
+# Makefile simple pour projet C++ SFML - Compatible Linux/Windows
+# Projet: tower_defense avec main.cpp et game.cpp
+# =============================================================================
+
+# Configuration de base
+PROJECT_NAME = tower_defense
+SOURCES = main.cpp game.cpp
+
+# Détection automatique de l'OS
+ifeq ($(OS),Windows_NT)
+    # Windows Configuration
+    DETECTED_OS := Windows
+    EXE_EXT := .exe
+    CXX := g++
+    
+    # Flags Windows
+    CXXFLAGS := -std=c++17 -Wall -Wextra -O2
+    INCLUDES := -ISFML/include
+    
+    # Bibliothèques SFML Windows
+    # Version statique (recommandée pour la portabilité)
+    LIBS_STATIC := -LSFML/lib -lsfml-graphics-s -lsfml-window-s -lsfml-audio-s -lsfml-system-s -lopengl32 -lfreetype -lwinmm -lgdi32 -lopenal32 -lflac -lvorbisenc -lvorbisfile -lvorbis -logg
+    # Version dynamique (nécessite les DLL)
+    LIBS_SHARED := -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-audio -lsfml-system
+    
+    # Configuration par défaut (statique)
+    LIBS := $(LIBS_STATIC)
+    LDFLAGS := -static
+    
+    # Commandes système Windows
+    RM := del /Q
+    CLEAN_CMD := if exist $(PROJECT_NAME)$(EXE_EXT) del $(PROJECT_NAME)$(EXE_EXT)
+else
+    # Linux/Unix Configuration
+    DETECTED_OS := Linux
+    EXE_EXT :=
+    CXX := g++
+    
+    # Flags Linux
+    CXXFLAGS := -std=c++17 -Wall -Wextra -O2
+    INCLUDES := $(shell pkg-config --cflags sfml-all)
+    
+    # Bibliothèques SFML Linux
+    LIBS := $(shell pkg-config --libs sfml-all)
+    LDFLAGS :=
+    
+    # Commandes système Linux
+    RM := rm -f
+    CLEAN_CMD := $(RM) $(PROJECT_NAME)$(EXE_EXT)
+endif
+
+# Nom de l'exécutable final
+TARGET := $(PROJECT_NAME)$(EXE_EXT)
+
+# =============================================================================
+# Règles de compilation
+# =============================================================================
+
+# Règle par défaut
+all: $(TARGET)
+	@echo "Compilation terminée pour $(DETECTED_OS)"
+	@echo "Exécutable: $(TARGET)"
+
+# Compilation de l'exécutable
+$(TARGET): $(SOURCES)
+	@echo "Compilation en cours..."
+	@echo "OS détecté: $(DETECTED_OS)"
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(TARGET) $(SOURCES) $(LIBS) $(LDFLAGS)
+
+# Version debug
+debug: CXXFLAGS += -g -DDEBUG -O0
+debug: $(TARGET)
+	@echo "Version debug compilée"
+
+# Version release optimisée
+release: CXXFLAGS += -DNDEBUG -O3
+release: $(TARGET)
+	@echo "Version release compilée"
+
+# =============================================================================
+# Configurations spécifiques Windows
+# =============================================================================
+
+# Compilation Windows avec bibliothèques statiques
+windows-static:
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(PROJECT_NAME).exe $(SOURCES) $(LIBS_STATIC) -static
+	@echo "Version Windows statique compilée"
+	@echo "Exécutable portable créé (pas besoin de DLL)"
+
+# Compilation Windows avec bibliothèques partagées
+windows-shared:
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(PROJECT_NAME).exe $(SOURCES) $(LIBS_SHARED)
+	@echo "Version Windows partagée compilée"
+	@echo "ATTENTION: Copiez les DLL SFML dans le même répertoire:"
+	@echo "  - sfml-graphics-2.dll"
+	@echo "  - sfml-window-2.dll"
+	@echo "  - sfml-audio-2.dll"
+	@echo "  - sfml-system-2.dll"
+
+# =============================================================================
+# Utilitaires
+# =============================================================================
+
+# Exécution du programme
+run: $(TARGET)
+	@echo "Lancement de $(PROJECT_NAME)..."
+ifeq ($(DETECTED_OS),Windows)
+	$(PROJECT_NAME)$(EXE_EXT)
+else
+	./$(PROJECT_NAME)$(EXE_EXT)
+endif
+
+# Nettoyage
+clean:
+	@echo "Nettoyage des fichiers..."
+	$(CLEAN_CMD)
+
+# Vérification des dépendances
+check:
+	@echo "Vérification des dépendances..."
+ifeq ($(DETECTED_OS),Linux)
+	@which $(CXX) > /dev/null && echo "✓ $(CXX) trouvé" || echo "✗ $(CXX) non trouvé"
+	@pkg-config --exists sfml-all && echo "✓ SFML trouvé" || echo "✗ SFML non trouvé"
+else
+	@where $(CXX) > nul 2>&1 && echo "✓ $(CXX) trouvé" || echo "✗ $(CXX) non trouvé"
+	@echo "Vérifiez manuellement la présence de SFML dans le dossier SFML/"
+endif
+
+# Aide
+help:
+	@echo "======================================"
+	@echo "  Makefile pour $(PROJECT_NAME)"
+	@echo "======================================"
+	@echo ""
+	@echo "Commandes disponibles:"
+	@echo "  make              - Compilation normale"
+	@echo "  make debug        - Compilation debug"
+	@echo "  make release      - Compilation optimisée"
+	@echo "  make run          - Compiler et exécuter"
+	@echo "  make clean        - Nettoyer les fichiers"
+	@echo "  make check        - Vérifier les dépendances"
+	@echo ""
+	@echo "Windows spécifique:"
+	@echo "  make windows-static  - Compilation statique (recommandé)"
+	@echo "  make windows-shared  - Compilation avec DLL"
+	@echo ""
+	@echo "Exemples d'utilisation:"
+	@echo "  make && make run           - Compiler et exécuter"
+	@echo "  make clean && make release - Recompiler en mode release"
+	@echo "  CXX=clang++ make          - Utiliser clang++ au lieu de g++"
+
+# Marquer les cibles comme .PHONY
+.PHONY: all debug release run clean check help windows-static windows-shared
+
+# =============================================================================
+# Instructions d'installation des dépendances
+# =============================================================================
+
+# Règle pour afficher les instructions d'installation
+install-deps:
+	@echo "======================================"
+	@echo "  Installation des dépendances"
+	@echo "======================================"
+	@echo ""
+ifeq ($(DETECTED_OS),Linux)
+	@echo "Ubuntu/Debian:"
+	@echo "  sudo apt update"
+	@echo "  sudo apt install build-essential libsfml-dev"
+	@echo ""
+	@echo "Fedora/CentOS:"
+	@echo "  sudo dnf install gcc-c++ SFML-devel"
+	@echo ""
+	@echo "Arch Linux:"
+	@echo "  sudo pacman -S base-devel sfml"
+else
+	@echo "Windows:"
+	@echo "1. Téléchargez SFML depuis https://www.sfml-dev.org/download.php"
+	@echo "2. Choisissez la version correspondant à votre compilateur"
+	@echo "3. Extraire dans un dossier 'SFML' à la racine du projet"
+	@echo "4. Structure attendue:"
+	@echo "   SFML/"
+	@echo "   ├── include/"
+	@echo "   ├── lib/"
+	@echo "   └── bin/ (pour les DLL)"
+	@echo ""
+	@echo "MinGW-w64 (recommandé):"
+	@echo "  https://www.mingw-w64.org/"
+endif
+	@echo ""
+	@echo "Après installation, tapez 'make check' pour vérifier"
+
+.PHONY: install-deps

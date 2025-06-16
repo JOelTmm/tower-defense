@@ -1,6 +1,9 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "stdexcept": "cpp",
+=======
+>>>>>>> Interface-utilisateur-son
         "any": "cpp",
         "array": "cpp",
         "atomic": "cpp",
@@ -86,6 +89,10 @@
         "spanstream": "cpp",
         "sstream": "cpp",
         "stacktrace": "cpp",
+<<<<<<< HEAD
+=======
+        "stdexcept": "cpp",
+>>>>>>> Interface-utilisateur-son
         "stdfloat": "cpp",
         "stop_token": "cpp",
         "streambuf": "cpp",

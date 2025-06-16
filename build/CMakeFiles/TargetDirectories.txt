@@ -1,3 +1,0 @@
-C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/tower-defense/build/CMakeFiles/tower-defense.dir
-C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/tower-defense/build/CMakeFiles/edit_cache.dir
-C:/Users/lrica/Desktop/LaPlateforme/Soutenances/BA_1/projet_tower_defense/tower-defense/build/CMakeFiles/rebuild_cache.dir

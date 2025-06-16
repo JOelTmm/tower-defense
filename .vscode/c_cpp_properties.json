@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "configurations": [
     {
       "name": "MinGW64",
@@ -15,3 +16,24 @@
   ],
   "version": 4
 }
+=======
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/include/**", // Ajout du dossier include du projet
+                "C:\\msys64\\ucrt64\\include", // Garder pour MSYS2
+                "C:\\msys64\\ucrt64\\include\\postgresql", // Garder pour PostgreSQL si nécessaire
+                "C:\\SFML-2.x\\include" // Ajout du chemin des en-têtes SFML (ajustez selon votre installation)
+            ],
+            "defines": [],
+            "compilerPath": "C:\\msys64\\ucrt64\\bin\\gcc.exe",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64"
+        }
+    ],
+    "version": 4
+}
+>>>>>>> Interface-utilisateur-son
