@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.16)
+project(tower-defense)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Include directories
+include_directories(include)
+
+# Source files for minimal working version
+set(SOURCES
+    src/main.cpp
+    src/Game.cpp
+    src/MainMenuState.cpp
+    src/SettingsState.cpp
+    src/ButtonFactory.cpp
+    src/ButtonText.cpp
+)
+
+# Find SFML
+find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+
+add_executable(tower-defense ${SOURCES})
+
+target_link_libraries(tower-defense sfml-graphics sfml-window sfml-system)
